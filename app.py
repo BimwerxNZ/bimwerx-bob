@@ -6,7 +6,7 @@ from langchain.chains import RetrievalQA
 from langchain_groq import ChatGroq
 
 # Set the GROQ API key
-os.environ["GROQ_API_KEY"] = "XXXX"
+os.environ["GROQ_API_KEY"] = st.secrets["GROQ_API_KEY"]
 
 def main():
     # Initialize session state for conversation history if it doesn't exist
