@@ -6,3 +6,4 @@ unstructured[md]==0.13.6
 fastembed==0.2.7
 flashrank==0.2.4
 rich
+supabase
