@@ -1,6 +1,6 @@
 import streamlit as st
 import os
-from loadsupabase import load_retriever  # Import the load_retriever function from load.py
+from load import load_retriever  # Import the load_retriever function from load.py
 from langchain.prompts import PromptTemplate
 from langchain.chains import RetrievalQA
 from langchain_groq import ChatGroq
