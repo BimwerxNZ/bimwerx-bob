@@ -7,7 +7,7 @@ from langchain_groq import ChatGroq
 from rich.console import Console
 from rich.markdown import Markdown
 
-os.environ["GROQ_API_KEY"] = "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"
+os.environ["GROQ_API_KEY"] = "XXXX"
 
 console = Console()
 
