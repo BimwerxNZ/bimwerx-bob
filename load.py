@@ -4,10 +4,10 @@ from langchain_community.embeddings.fastembed import FastEmbedEmbeddings
 from supabase import create_client
 
 # Supabase configuration (replace with your details)
-SUPABASE_URL = "XXXX"
-SUPABASE_KEY = "XXXX"
+SUPABASE_URL = st.secrets["SUPABASE_URL"]
+SUPABASE_KEY = st.secrets["SUPABASE_KEY"]
 
-os.environ["GROQ_API_KEY"] = "XXXX"
+os.environ["GROQ_API_KEY"] = st.secrets["GROQ_API_KEY"]
 
 def load_retriever():
     embeddings = FastEmbedEmbeddings(model_name="BAAI/bge-base-en-v1.5")
