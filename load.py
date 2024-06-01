@@ -1,3 +1,4 @@
+import streamlit as st
 import os
 from langchain_community.vectorstores import SupabaseVectorStore
 from langchain_community.embeddings.fastembed import FastEmbedEmbeddings
