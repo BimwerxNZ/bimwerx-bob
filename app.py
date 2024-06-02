@@ -67,16 +67,16 @@ def main():
     )
 
     # Display conversation history with icon
-    for exchange in st.session_state['history']:
-        st.text_area("Q:", value=exchange['question'], height=50, disabled=True)
+    for i, exchange in enumerate(st.session_state['history']):
+        st.text_area(f"Q_{i}", value=exchange['question'], height=50, disabled=True)
         st.markdown(f'<img src="https://bimwerxfea.com/AI/Boxlogosmall32.png" class="icon"/>', unsafe_allow_html=True)
-        st.text_area("A:", value=exchange['answer'], height=100, disabled=True)
+        st.text_area(f"A_{i}", value=exchange['answer'], height=100, disabled=True)
 
     # Container for the input box
     input_container = st.container()
 
     with input_container:
-        query = st.text_input('Ask a question:')
+        query = st.text_input('Ask a question:', key="query_input")
 
     # Process the query
     if query:
