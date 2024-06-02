@@ -92,6 +92,11 @@ def main():
     with st.form(key='query_form'):
         query = st.text_input('Ask a question:', key="query_input")
         submitted = st.form_submit_button('Submit')
+        clear_button = st.form_submit_button('Clear')
+
+    # Clear the input box when the clear button is pressed
+    if clear_button:
+        st.session_state['query_input'] = ""
 
     # Process the query
     if submitted and query and st.session_state['last_query'] != query:
@@ -109,7 +114,7 @@ def main():
     # Display the latest response in a text area to maintain formatting consistency
     if st.session_state['history']:
         latest_response = st.session_state['history'][-1]['answer']
-        st.text_area("Latest Response:", value=f"Q: {st.session_state['history'][-1]['question']}\nA: {latest_response}", height=200, disabled=True)
+        st.text_area("Latest Response:", value=latest_response, height=200, disabled=True)
 
 if __name__ == "__main__":
     main()
