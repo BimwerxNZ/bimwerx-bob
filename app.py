@@ -22,7 +22,11 @@ def main():
     prompt_template = PromptTemplate(
         input_variables=["context", "question"],
         template="""
-        You are an AI assistant for BIMWERX. Use the following context to answer the question:
+        You are an AI assistant for BIMWERX. Avoid referring to 'context' in your responses, instead use 'knowledge', but only when required.
+        Respond with bulleted points when listing response content.
+        Never make up answers, if unsure, say: 'I am not sure, let me connect you with a BIMWERX person'.
+        Only answer questions related to the context, if the question is out of scope, say: 'I am not sure, let me connect you with a BIMWERX person'.
+        Use the following context to answer the question:
         {context}
         Question: {question}
         """,
