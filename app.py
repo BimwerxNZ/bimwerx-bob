@@ -112,7 +112,12 @@ def main():
     # Display the latest response in a div
     if st.session_state['history']:
         latest_response = st.session_state['history'][-1]['answer']
-        st.markdown(f'<div class="response-container">{latest_response}</div>', unsafe_allow_html=True)
+        st.markdown(
+            f'<div class="response-container">'
+            f'<img src="https://bimwerxfea.com/AI/Boxlogosmall32.png" class="icon"/>'
+            f'{latest_response}</div>',
+            unsafe_allow_html=True
+        )
 
 if __name__ == "__main__":
     main()
