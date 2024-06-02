@@ -77,6 +77,8 @@ def main():
             background-color: #f0f0f0;
             border-radius: 5px;
             margin-top: 10px;
+            white-space: pre-wrap; /* Ensures that the text wraps correctly */
+            color: black; /* Ensures text color is visible */
         }
         </style>
         """,
