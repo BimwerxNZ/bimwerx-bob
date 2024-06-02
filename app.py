@@ -89,25 +89,26 @@ def main():
     st.markdown('</div>', unsafe_allow_html=True)
 
     # Container for the input box
-    query = st.text_input('Ask a question:', key="query_input")
+    with st.container():
+        query = st.text_input('Ask a question:', key="query_input")
 
     # Process the query
-    if query and st.button('Submit'):
-        if st.session_state['last_query'] != query:
-            response = qa_chain({"query": query})
-            response_txt = response["result"]
-            
-            # Update conversation history
-            st.session_state['history'].append({"question": query, "answer": response_txt})
-            st.session_state['last_query'] = query
+    if query and st.session_state['last_query'] != query:
+        response = qa_chain({"query": query})
+        response_txt = response["result"]
+        
+        # Update conversation history
+        st.session_state['history'].append({"question": query, "answer": response_txt})
+        st.session_state['last_query'] = query
 
-            # Clear the input box after submission
-            st.experimental_rerun()
+        # Clear the input box after submission
+        st.session_state['query_input'] = ""
+        st.experimental_rerun()
 
     # Display the latest response in a text area to maintain formatting consistency
     if st.session_state['history']:
         latest_response = st.session_state['history'][-1]['answer']
-        st.text_area("Latest Response:", value=latest_response, height=200, disabled=True)
+        st.text_area("Latest Response:", value=f"Q: {st.session_state['history'][-1]['question']}\nA: {latest_response}", height=200, disabled=True)
 
 if __name__ == "__main__":
     main()
