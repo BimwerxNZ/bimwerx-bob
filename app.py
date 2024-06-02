@@ -55,6 +55,10 @@ def main():
             width: 100%;
             background-color: #f9f9f9;
             padding: 10px 0;
+            z-index: 1000;
+        }
+        .chat-container {
+            margin-bottom: 100px; /* Space for the fixed input box */
         }
         .icon {
             width: 32px;
@@ -66,27 +70,28 @@ def main():
         unsafe_allow_html=True,
     )
 
-    # Display conversation history with icon
+    # Display conversation history
+    st.markdown('<div class="chat-container">', unsafe_allow_html=True)
     for i, exchange in enumerate(st.session_state['history']):
         st.text_area(f"Q_{i}", value=exchange['question'], height=50, disabled=True)
         st.markdown(f'<img src="https://bimwerxfea.com/AI/Boxlogosmall32.png" class="icon"/>', unsafe_allow_html=True)
         st.text_area(f"A_{i}", value=exchange['answer'], height=100, disabled=True)
+    st.markdown('</div>', unsafe_allow_html=True)
 
     # Container for the input box
-    input_container = st.container()
-
-    with input_container:
+    with st.container():
         query = st.text_input('Ask a question:', key="query_input")
 
     # Process the query
-    if query:
+    if query and st.session_state.get('last_query') != query:
         response = qa_chain({"query": query})
         response_txt = response["result"]
         
         # Update conversation history
         st.session_state['history'].append({"question": query, "answer": response_txt})
-        
-        # Scroll to the bottom of the page
+        st.session_state['last_query'] = query
+
+        # Clear the input box after submission
         st.experimental_rerun()
 
 if __name__ == "__main__":
