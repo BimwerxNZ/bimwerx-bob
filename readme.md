@@ -28,7 +28,7 @@ This guide provides a quick overview of creating a basic but functional AI chatb
    python train.py
    ```
 
-9. **Deploy on Vercel.**
+9. **Deploy on Streamlit (app.py).**
 
 10. **Insert CSS and iframe into the existing HTML page.**
 
