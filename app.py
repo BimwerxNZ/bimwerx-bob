@@ -102,7 +102,7 @@ def main():
         st.session_state['last_query'] = query
 
         # Clear the input box after submission
-        st.session_state['query_input'] = ""
+        # st.session_state['query_input'] = ""
         st.experimental_rerun()
 
     # Display the latest response in a text area to maintain formatting consistency
