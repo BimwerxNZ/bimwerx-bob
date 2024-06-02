@@ -1,5 +1,5 @@
 
-# Basic Python + Streamlit-powered AI Chatbot on Custom Trained Data
+# Basic Python + Streamlit-powered AI (Groq) Chatbot on Custom Trained Data
 
 ## Overview
 This guide provides a quick overview of creating a basic but functional AI chatbot that can be embedded into almost any website as a widget. The chatbot connects to a Supabase database vector store on custom trained content.
