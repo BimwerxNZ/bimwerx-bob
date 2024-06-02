@@ -14,8 +14,6 @@ def main():
         st.session_state['history'] = []
     if 'last_query' not in st.session_state:
         st.session_state['last_query'] = None
-    if 'query_input' not in st.session_state:
-        st.session_state['query_input'] = ""
 
     retriever = load_retriever()
 
@@ -91,11 +89,12 @@ def main():
     st.markdown('</div>', unsafe_allow_html=True)
 
     # Container for the input box
-    with st.container():
-        query = st.text_input('Ask a question:', key="query_input", value=st.session_state['query_input'])
+    with st.form(key='query_form'):
+        query = st.text_input('Ask a question:', key="query_input")
+        submitted = st.form_submit_button('Submit')
 
     # Process the query
-    if query and st.session_state['last_query'] != query:
+    if submitted and query and st.session_state['last_query'] != query:
         response = qa_chain({"query": query})
         response_txt = response["result"]
         
