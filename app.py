@@ -44,7 +44,10 @@ def main():
     )
 
     # Streamlit UI
-    st.title('BIMWERX Bob')
+    st.markdown(
+        '<h1><img src="https://bimwerxfea.com/AI/Boxlogosmall32.png" class="icon"/> BIMWERX Bob</h1>',
+        unsafe_allow_html=True,
+    )
     st.markdown('**Virtual web assistant**')
 
     # CSS to style the input textbox and history container
@@ -99,19 +102,13 @@ def main():
         st.session_state['last_query'] = query
 
         # Clear the input box after submission
+        st.session_state['query_input'] = ""
         st.experimental_rerun()
 
-    # Display the latest response with an icon in a div
+    # Display the latest response in a text area to maintain formatting consistency
     if st.session_state['history']:
-        latest_question = st.session_state['history'][-1]['question']
         latest_response = st.session_state['history'][-1]['answer']
-        st.markdown(
-            f'<div class="response-container">'
-            f'<img src="https://bimwerxfea.com/AI/Boxlogosmall32.png" class="icon"/>'
-            f'<span style="white-space: pre-wrap;">Q: {latest_question}\nA: {latest_response}</span>'
-            f'</div>',
-            unsafe_allow_html=True
-        )
+        st.text_area("Latest Response:", value=f"Q: {st.session_state['history'][-1]['question']}\nA: {latest_response}", height=200, disabled=True)
 
 if __name__ == "__main__":
     main()
