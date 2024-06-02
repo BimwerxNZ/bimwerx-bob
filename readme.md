@@ -7,9 +7,9 @@ This guide provides a quick overview of creating a basic but functional AI chatb
 ## Steps
 
 1. **Clone the repository:**
-   \`\`\`bash
+   ```bash
    git clone https://github.com/BimwerxNZ/bimwerx-bob.git
-   \`\`\`
+   ```
 
 2. **Obtain Supabase database, API, and Auth keys from [Supabase](https://supabase.com/).**
 
@@ -17,16 +17,16 @@ This guide provides a quick overview of creating a basic but functional AI chatb
 
 4. **Obtain Groq API key from [Groq](https://console.groq.com/keys).**
 
-5. **Create a database on Supabase and add the SQL function for \`match_documents\`.**
+5. **Create a database on Supabase and add the SQL function for `match_documents`.**
 
 6. **Prepare training data (PDF) and place it in the data folder.**
 
 7. **Update API keys and training references.**
 
 8. **Run the training script:**
-   \`\`\`bash
+   ```bash
    python train.py
-   \`\`\`
+   ```
 
 9. **Deploy on Vercel.**
 
@@ -35,22 +35,22 @@ This guide provides a quick overview of creating a basic but functional AI chatb
 ## Supabase SQL Steps
 
 1. **Create an extension:**
-   \`\`\`sql
+   ```sql
    CREATE EXTENSION IF NOT EXISTS vector;
-   \`\`\`
+   ```
 
 2. **Create the table:**
-   \`\`\`sql
+   ```sql
    CREATE TABLE document_embeddings (
        id uuid DEFAULT uuid_generate_v4() PRIMARY KEY,
        content text,
        metadata jsonb,
        embedding vector(768)
    );
-   \`\`\`
+   ```
 
-3. **Create the \`match_documents\` function:**
-   \`\`\`sql
+3. **Create the `match_documents` function:**
+   ```sql
    CREATE OR REPLACE FUNCTION match_documents(
        query_embedding vector(768), 
        match_count int = 5
@@ -78,12 +78,12 @@ This guide provides a quick overview of creating a basic but functional AI chatb
            match_count;
    END;
    $$;
-   \`\`\`
+   ```
 
 ## To Insert into an Existing Webpage
 
 1. **Add CSS Style to the page:**
-   \`\`\`html
+   ```html
    <style>
        /* Chatbot button styles */
        #chatbot-button {
@@ -128,10 +128,10 @@ This guide provides a quick overview of creating a basic but functional AI chatb
            width: 500px !important; /* Adjust width if needed */
        }
    </style>
-   \`\`\`
+   ```
 
 2. **Add HTML to the body:**
-   \`\`\`html
+   ```html
    <!-- Chatbot button -->
    <div id="chatbot-button">Chat</div>
 
@@ -139,7 +139,7 @@ This guide provides a quick overview of creating a basic but functional AI chatb
    <div id="chatbot-iframe-container">
        <iframe
            id="chatbot-iframe"
-           src="https://bimwerx-bob.streamlit.app?embed=true"
+           src="[YOUR STREAMLIT APP URL HERE]?embed=true"
        ></iframe>
    </div>
 
@@ -156,4 +156,4 @@ This guide provides a quick overview of creating a basic but functional AI chatb
            console.log('Iframe container classes:', chatbotIframeContainer.className); // Debugging log
        });
    </script>
-   \`\`\`
+   ```
