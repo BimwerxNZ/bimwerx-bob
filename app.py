@@ -14,6 +14,8 @@ def main():
         st.session_state['history'] = []
     if 'last_query' not in st.session_state:
         st.session_state['last_query'] = None
+    if 'query_input' not in st.session_state:
+        st.session_state['query_input'] = ""
 
     retriever = load_retriever()
 
@@ -90,7 +92,7 @@ def main():
 
     # Container for the input box
     with st.container():
-        query = st.text_input('Ask a question:', key="query_input")
+        query = st.text_input('Ask a question:', key="query_input", value=st.session_state['query_input'])
 
     # Process the query
     if query and st.session_state['last_query'] != query:
