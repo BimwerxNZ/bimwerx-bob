@@ -18,6 +18,7 @@ def parse_and_load_documents():
      Try to be precise while answering the questions, if unsure, do not make up responses, say 'I am not sure, let me connect you with a BIMWERX FEA person'"""
 
     parser = LlamaParse(
+        # Replace with your llama parse key at https://cloud.llamaindex.ai:
         api_key="xxx",
         result_type="markdown",
         parsing_instruction=instruction,
