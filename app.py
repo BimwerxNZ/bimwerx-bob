@@ -101,10 +101,17 @@ def main():
         # Clear the input box after submission
         st.experimental_rerun()
 
-    # Display the latest response in a text area to maintain formatting consistency
+    # Display the latest response with an icon in a div
     if st.session_state['history']:
+        latest_question = st.session_state['history'][-1]['question']
         latest_response = st.session_state['history'][-1]['answer']
-        st.text_area("Latest Response:", value=f"Q: {st.session_state['history'][-1]['question']}\nA: {latest_response}", height=200, disabled=True)
+        st.markdown(
+            f'<div class="response-container">'
+            f'<img src="https://bimwerxfea.com/AI/Boxlogosmall32.png" class="icon"/>'
+            f'<span style="white-space: pre-wrap;">Q: {latest_question}\nA: {latest_response}</span>'
+            f'</div>',
+            unsafe_allow_html=True
+        )
 
 if __name__ == "__main__":
     main()
