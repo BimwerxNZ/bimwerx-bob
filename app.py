@@ -72,14 +72,6 @@ def main():
             vertical-align: middle;
             margin-right: 5px;
         }
-        .response-container {
-            padding: 10px;
-            background-color: #f0f0f0;
-            border-radius: 5px;
-            margin-top: 10px;
-            white-space: pre-wrap; /* Ensures that the text wraps correctly */
-            color: black; /* Ensures text color is visible */
-        }
         </style>
         """,
         unsafe_allow_html=True,
@@ -109,15 +101,10 @@ def main():
         # Clear the input box after submission
         st.experimental_rerun()
 
-    # Display the latest response in a div
+    # Display the latest response in a text area to maintain formatting consistency
     if st.session_state['history']:
         latest_response = st.session_state['history'][-1]['answer']
-        st.markdown(
-            f'<div class="response-container">'
-            f'<img src="https://bimwerxfea.com/AI/Boxlogosmall32.png" class="icon"/>'
-            f'{latest_response}</div>',
-            unsafe_allow_html=True
-        )
+        st.text_area("Latest Response:", value=f"Q: {st.session_state['history'][-1]['question']}\nA: {latest_response}", height=200, disabled=True)
 
 if __name__ == "__main__":
     main()
