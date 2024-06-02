@@ -12,6 +12,8 @@ def main():
     # Initialize session state for conversation history if it doesn't exist
     if 'history' not in st.session_state:
         st.session_state['history'] = []
+    if 'last_query' not in st.session_state:
+        st.session_state['last_query'] = None
 
     retriever = load_retriever()
 
@@ -45,7 +47,7 @@ def main():
     st.title('BIMWERX Bob')
     st.markdown('**Virtual web assistant**')
 
-    # CSS to fix input textbox at the bottom
+    # CSS to style the input textbox and history container
     st.markdown(
         """
         <style>
@@ -58,24 +60,35 @@ def main():
             z-index: 1000;
         }
         .chat-container {
-            margin-bottom: 100px; /* Space for the fixed input box */
+            margin-bottom: 120px; /* Space for the fixed input box */
+        }
+        .history-container {
+            max-height: 200px;
+            overflow: auto;
+            margin-bottom: 20px;
         }
         .icon {
             width: 32px;
             vertical-align: middle;
             margin-right: 5px;
         }
+        .response-container {
+            padding: 10px;
+            background-color: #f0f0f0;
+            border-radius: 5px;
+            margin-top: 10px;
+        }
         </style>
         """,
         unsafe_allow_html=True,
     )
 
-    # Display conversation history
+    # Display conversation history in an expandable div
     st.markdown('<div class="chat-container">', unsafe_allow_html=True)
-    for i, exchange in enumerate(st.session_state['history']):
-        st.text_area(f"Q_{i}", value=exchange['question'], height=50, disabled=True)
-        st.markdown(f'<img src="https://bimwerxfea.com/AI/Boxlogosmall32.png" class="icon"/>', unsafe_allow_html=True)
-        st.text_area(f"A_{i}", value=exchange['answer'], height=100, disabled=True)
+    if st.session_state['history']:
+        history = "\n\n".join([f"Q: {exchange['question']}\nA: {exchange['answer']}" for exchange in st.session_state['history']])
+        with st.expander("History"):
+            st.text_area("Chat History", value=history, height=200, disabled=True)
     st.markdown('</div>', unsafe_allow_html=True)
 
     # Container for the input box
@@ -83,7 +96,7 @@ def main():
         query = st.text_input('Ask a question:', key="query_input")
 
     # Process the query
-    if query and st.session_state.get('last_query') != query:
+    if query and st.session_state['last_query'] != query:
         response = qa_chain({"query": query})
         response_txt = response["result"]
         
@@ -93,6 +106,11 @@ def main():
 
         # Clear the input box after submission
         st.experimental_rerun()
+
+    # Display the latest response in a div
+    if st.session_state['history']:
+        latest_response = st.session_state['history'][-1]['answer']
+        st.markdown(f'<div class="response-container">{latest_response}</div>', unsafe_allow_html=True)
 
 if __name__ == "__main__":
     main()
