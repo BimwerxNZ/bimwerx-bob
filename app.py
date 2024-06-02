@@ -22,7 +22,11 @@ def main():
     prompt_template = PromptTemplate(
         input_variables=["context", "question"],
         template="""
-        You are an AI assistant for BIMWERX. Use the following context to answer the question:
+        You are an AI assistant for BIMWERX. Avoid referring to 'context' in your responses, instead use 'knowledge', but only when required.
+        Respond with bulleted points when listing response content.
+        Never make up answers, if unsure, say: 'I am not sure, let me connect you with a BIMWERX person'.
+        Only answer questions related to the context, if the question is out of scope, say: 'I am not sure, let me connect you with a BIMWERX person'.
+        Use the following context to answer the question:
         {context}
         Question: {question}
         """,
@@ -38,14 +42,43 @@ def main():
     )
 
     # Streamlit UI
-    st.title('BIMWERX Chatbot')
-    query = st.text_input('Ask a question:')
-    
-    # Display conversation history
+    st.title('BIMWERX Bob')
+    st.markdown('**Virtual web assistant**')
+
+    # CSS to fix input textbox at the bottom
+    st.markdown(
+        """
+        <style>
+        .input-container {
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            background-color: #f9f9f9;
+            padding: 10px 0;
+        }
+        .icon {
+            width: 32px;
+            vertical-align: middle;
+            margin-right: 5px;
+        }
+        </style>
+        """,
+        unsafe_allow_html=True,
+    )
+
+    # Display conversation history with icon
     for exchange in st.session_state['history']:
         st.text_area("Q:", value=exchange['question'], height=50, disabled=True)
+        st.markdown(f'<img src="https://bimwerxfea.com/AI/Boxlogosmall32.png" class="icon"/>', unsafe_allow_html=True)
         st.text_area("A:", value=exchange['answer'], height=100, disabled=True)
 
+    # Container for the input box
+    input_container = st.container()
+
+    with input_container:
+        query = st.text_input('Ask a question:')
+
+    # Process the query
     if query:
         response = qa_chain({"query": query})
         response_txt = response["result"]
@@ -53,8 +86,8 @@ def main():
         # Update conversation history
         st.session_state['history'].append({"question": query, "answer": response_txt})
         
-        # Display the latest response
-        st.text_area("A:", value=response_txt, height=100, disabled=True)
+        # Scroll to the bottom of the page
+        st.experimental_rerun()
 
 if __name__ == "__main__":
     main()
