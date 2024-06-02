@@ -89,27 +89,20 @@ def main():
     st.markdown('</div>', unsafe_allow_html=True)
 
     # Container for the input box
-    with st.form(key='query_form'):
-        query = st.text_input('Ask a question:', key="query_input")
-        submitted = st.form_submit_button('Submit')
-        clear_button = st.form_submit_button('Clear')
-
-    # Clear the input box when the clear button is pressed
-    if clear_button:
-        st.session_state['query_input'] = ""
+    query = st.text_input('Ask a question:', key="query_input")
 
     # Process the query
-    if submitted and query and st.session_state['last_query'] != query:
-        response = qa_chain({"query": query})
-        response_txt = response["result"]
-        
-        # Update conversation history
-        st.session_state['history'].append({"question": query, "answer": response_txt})
-        st.session_state['last_query'] = query
+    if query and st.button('Submit'):
+        if st.session_state['last_query'] != query:
+            response = qa_chain({"query": query})
+            response_txt = response["result"]
+            
+            # Update conversation history
+            st.session_state['history'].append({"question": query, "answer": response_txt})
+            st.session_state['last_query'] = query
 
-        # Clear the input box after submission
-        st.session_state['query_input'] = ""
-        st.experimental_rerun()
+            # Clear the input box after submission
+            st.experimental_rerun()
 
     # Display the latest response in a text area to maintain formatting consistency
     if st.session_state['history']:
