@@ -21,7 +21,7 @@ def load_retriever():
         client=client,
         embedding=embeddings,
         table_name="documents",
-        query_name="match_documents"
+        query_name="match_documents_p"
     )
     
     retriever = supabase_vector_store.as_retriever(search_kwargs={"k": 5})
