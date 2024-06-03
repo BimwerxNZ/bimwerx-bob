@@ -11,13 +11,13 @@ This guide provides a quick overview of creating a basic but functional AI chatb
    git clone https://github.com/BimwerxNZ/bimwerx-bob.git
    ```
 
-2. **Obtain Supabase database, API, and Auth keys from [Supabase](https://supabase.com/).**
+2. **Obtain LlamaParse API key from [LlamaParse](https://cloud.llamaindex.ai).**
 
-3. **Obtain LlamaParse API key from [LlamaParse](https://cloud.llamaindex.ai).**
+3. **Obtain Groq API key from [Groq](https://console.groq.com/keys).**
 
-4. **Obtain Groq API key from [Groq](https://console.groq.com/keys).**
-
-5. **Create a database on Supabase and add the SQL function for `match_documents`.**
+4. **Create a database on Supabase and add the SQL function for `match_documents`.**
+   
+5. **Obtain Supabase database, API, and Auth keys from [Supabase](https://supabase.com/).**
 
 6. **Prepare training data (PDF) and place it in the data folder.**
 
